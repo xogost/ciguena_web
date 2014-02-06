@@ -78,7 +78,9 @@ module.exports = {
       var orderList = req.param('orderList');
       var dataPeople = req.param('dataPeople');
       
-      io.sockets.emit("OrderResponse", { data: "Socket OK!", orderListP: orderList, dataPeopleP: dataPeople });
+      io.sockets.emit("OrderResponse", { orderListP: orderList, dataPeopleP: dataPeople });
+
+      io.sockets.emit('confirmationOrder', {state: "La solicitud de servicio ha sido recibida, y será confirmada en un lapso de 5 a 10 minutos, Gracias."});
 
       return res.json({
         hello: 'world'

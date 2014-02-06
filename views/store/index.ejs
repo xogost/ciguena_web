@@ -10,11 +10,10 @@
 	
 	$(document).ready(function(){
 		socket.on('OrderResponse', function(data){
-			
-			console.log(data.dataPeopleP);
 			$("#ClientsOrders").append("<li><a href='#' onclick='$(\".modal\").modal(\"show\");' >" + data.dataPeopleP[0] + " <br/>" + data.dataPeopleP[1] + " " + data.dataPeopleP[2] + "</a></li>");
 
 			$("#ItemList").append("<ul class='listView'>" + data.orderListP + "</ul>");
+
 		});
 	});
 </script>
@@ -31,13 +30,16 @@ body, .food { background: url('/images/food.png');}
     	font-size: 2em;
     	-moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; /*IE 7 AND 8 DO NOT SUPPORT BORDER RADIUS*/ -moz-box-shadow: 0px 0px 2px #000000; -webkit-box-shadow: 0px 0px 2px #000000; box-shadow: 0px 0px 2px #000000; /*IE 7 AND 8 DO NOT SUPPORT BLUR PROPERTY OF SHADOWS*/ 
     }
+    #orderListContainer li{
+      margin-top: 1em;
+    }
     #orderListContainer a{
     	color: #fff;
     }
 </style>
 
 <div class="food" style="width: 100%; text-align: center; ">
-	<h1 style="font-family: 'Oregano', Tahoma;">Listado de Domicilios en Cola para tienda:<br/>Don Lcuho!</h1>
+	<h1 style="font-family: 'Oregano', Tahoma;">Listado de Domicilios en Cola para tienda:<br/>Don Lucho!</h1>
 	<div id="orderListContainer" style="background-color: rgba(0, 0, 0, 0.6); heigth: 600px; width: 80%; margin: 0 auto; padding: 3em;">
 		<ol id="ClientsOrders">
 
