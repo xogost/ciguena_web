@@ -1,0 +1,27 @@
+<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Oregano">
+<link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+<script type="text/javascript" src="/js/zepto.min.js"></script>
+<script type="text/javascript">
+	
+	$(document).ready(function(){
+		socket.on('OrderResponse', function(data){
+			$("#orderListContainer").append("<ul class='listView'>" + data.orderListP + "</ul>")
+		});
+	});
+</script>
+
+<style type="text/css">
+body, .food { background: url('/images/food.png');}
+
+.square { margin-top 2em; width: 70px; height: 70px; background: #3d3d3d; display: inline-block; color: #fff; font-size: 2em; line-height: 70px; text-transform: uppercase;}
+    .listView { margin: 1em; padding: 0px; list-style-type: none;}
+    .listView li { padding: 2em; background: #fff; margin-top: 1em; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; /*IE 7 AND 8 DO NOT SUPPORT BORDER RADIUS*/ -moz-box-shadow: 0px 0px 2px #000000; -webkit-box-shadow: 0px 0px 2px #000000; box-shadow: 0px 0px 2px #000000; /*IE 7 AND 8 DO NOT SUPPORT BLUR PROPERTY OF SHADOWS*/ }
+</style>
+
+<div class="food" style="width: 100%; text-align: center; ">
+	<h1 style="font-family: 'Oregano', Tahoma;">Listado de Domicilios en Cola para tienda:<br/>Don Lcuho!</h1>
+	<div id="orderListContainer" style="background-color: rgba(0, 0, 0, 0.6); heigth: 600px; width: 80%; margin: 0 auto; padding: 3em;">
+
+	</div>
+</div>
