@@ -7,15 +7,33 @@
 <script type="text/javascript" src="/js/bootstrap.min.js"></script>
 
 <script type="text/javascript">
-	
+	var arrayOrdersProducts = [];
+  var count = 0;
 	$(document).ready(function(){
 		socket.on('OrderResponse', function(data){
-			$("#ClientsOrders").append("<li><a href='#' onclick='$(\".modal\").modal(\"show\");' >" + data.dataPeopleP[0] + " <br/>" + data.dataPeopleP[1] + " " + data.dataPeopleP[2] + "</a></li>");
-
-			$("#ItemList").append("<ul class='listView'>" + data.orderListP + "</ul>");
+			$("#ClientsOrders").append("<li><a href='#' onclick='loadOrder(" + count + ");' >" + data.dataPeopleP[0] + " <br/>" + data.dataPeopleP[1] + " " + data.dataPeopleP[2] + "</a></li>");
+        count++;
+        arrayOrdersProducts.push(data.orderListP);
 
 		});
 	});
+
+  function loadOrder(position){
+    var html = "";
+    for(var i = 0; i < arrayOrdersProducts[position].length ; i++){ 
+          
+      var color = '#'+Math.floor(Math.random()*16777215).toString(16);
+
+      html += "<li><label>Producto:</label><span>" + arrayOrdersProducts[position][i][0] + "</span><br/><label>Cantidad:</label><span>" + arrayOrdersProducts[position][i][1] + "</span></li>";
+
+    }
+
+
+    $(".modal").modal("show");
+
+
+    $("#ItemList").html(html);
+  }
 </script>
 
 <style type="text/css">
@@ -55,8 +73,8 @@ body, .food { background: url('/images/food.png');}
         <h4 class="modal-title">Listado de Productos</h4>
       </div>
       <div class="modal-body">
-        <ul id="ItemList">
-        <ul>
+        <ol id="ItemList">
+        </ol>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default btn-success" data-dismiss="modal">Cerrar Lista!</button>
