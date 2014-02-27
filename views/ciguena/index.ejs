@@ -1,0 +1,66 @@
+<style>
+h1, h2, h3, h4, h5, span, strong, a{ color: #191919; font-family: 'Oregano', Tahoma; }
+header {width: 80%; margin: 0 auto;}
+body{ background: url('/images/pixel_weave.png'); }
+.header { float: left; width: 49%; }
+.containerMenu { float: right; width: 49%; }
+.menuheader li { float: left; display: inline-block; margin-left: 1em; margin-top: 3em;}
+a {font-size: 1.5em;}
+.map {width: 100%; height: 300px; clear: both; border-top: 3px solid #191919; border-bottom: 3px solid #191919; }
+</style>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIfS9ii1snXq6LLbd59yolJDnCuV0nZNA&sensor=true"> </script>
+<script type='text/javascript'>
+	$(document).ready(function(){
+		if($("#map-canvas").length != 0)
+	    {
+	        var mapOptions = {
+	          center: new google.maps.LatLng(-34.397, 150.644),
+	          zoom: 15
+	        };
+	        var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+	        
+	        // Try HTML5 geolocation
+	        if(navigator.geolocation) {
+	          navigator.geolocation.getCurrentPosition(function(position) {
+	            var pos = new google.maps.LatLng(position.coords.latitude,
+	                                             position.coords.longitude);
+
+	            var infowindow = new google.maps.InfoWindow({
+	              map: map,
+	              position: pos,
+	              content: 'Usted se encuentra aquí!'
+	            });
+
+	            map.setCenter(pos);
+	          }, function() {
+	            handleNoGeolocation(true);
+	          });
+	        } else {
+	          // Browser doesn't support Geolocation
+	          handleNoGeolocation(false);
+	        }
+
+	        $("#map-canvas").css("height","300px");
+	    }
+	});
+</script>
+
+<header>
+	<section class="header">
+		<h1><a href='/'>Cigueña</a></h1>
+	</section>
+	<section class="containerMenu">
+		<ul class="menuheader">
+			<li><a href='/sesion/inicio'>Iniciar Sesión</a></li>
+			<li><a href='/store/search'>Buscar Tiendas</a></li>
+			<li><a href='/ciguena/support'>Soporte en Linea</a></li>
+			<li><a href='/ciguena/about'>Quienes Somos</a></li>
+		</ul>
+	</section>
+</header>
+<br/>
+<br/>
+<section class="map">
+	<div id="map-canvas">
+  	</div>
+</section>

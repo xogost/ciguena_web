@@ -1,5 +1,5 @@
 /**
- * StoreController
+ * CiguenaController
  *
  * @module      :: Controller
  * @description	:: A set of functions called `actions`.
@@ -20,9 +20,19 @@ module.exports = {
   
   /**
    * Action blueprints:
-   *    `/store/create`
+   *    `/ciguena/index`
+   *    `/ciguena`
    */
-   create: function (req, res) {
+   index: function (req, res) {
+    res.view({ title: "Cigueña Pagina Principal!" });
+  },
+
+
+  /**
+   * Action blueprints:
+   *    `/ciguena/support`
+   */
+   support: function (req, res) {
     
     // Send a JSON response
     return res.json({
@@ -33,66 +43,22 @@ module.exports = {
 
   /**
    * Action blueprints:
-   *    `/store/index`
-   *    `/store`
+   *    `/ciguena/about`
    */
-  index: function (req, res) {
-    res.view({ title: "Domicilios Tendero!" });
-  },
-
-
-  /**
-   * Action blueprints:
-   *    `/store/destroy`
-   */
-   destroy: function (req, res) {
+   about: function (req, res) {
     
     // Send a JSON response
     return res.json({
       hello: 'world'
     });
   },
-
-
-  /**
-   * Action blueprints:
-   *    `/store/like`
-   */
-   like: function (req, res) {
-    
-    // Send a JSON response
-    return res.json({
-      hello: 'world'
-    });
-  },
-
-
-  /**
-   * Action blueprints:
-   *    `/store/order`
-   */
-   order: function (req, res) {
-      var socket = req.socket;
-      var io = sails.io;
-
-      var orderList = req.param('orderList');
-      var dataPeople = req.param('dataPeople');
-      
-      io.sockets.emit("OrderResponse", { orderListP: orderList, dataPeopleP: dataPeople });
-
-      io.sockets.emit('confirmationOrder', {state: "La solicitud de servicio ha sido recibida, y será confirmada en un lapso de 5 a 10 minutos, Gracias."});
-
-      return res.json({
-        hello: 'world'
-      });
-    },
 
 
 
 
   /**
    * Overrides for the settings in `config/controllers.js`
-   * (specific to StoreController)
+   * (specific to CiguenaController)
    */
   _config: {}
 
