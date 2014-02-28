@@ -1,0 +1,45 @@
+<link rel="stylesheet" href="/css/datatables/jquery.dataTables.css">
+<link rel="stylesheet" href="/css/jquery.ui/jquery-ui-1.10.4.custom.min.css">
+
+<script type="text/javascript" src="/js/jquery.dataTables.min.js"></script>
+
+<script type='text/javascript'>
+	$(document).ready(function(){
+		var table = $("#listRoles").dataTable({
+			"aaSorting": [[ 3, "desc" ]],
+			"bJQueryUI": true,
+		});
+
+		$("#newRole").click(function(){
+			globalAjaxMessage('/roles/create/', { roleName: $("#txtrole").val() }, 'El rol se almaceno correctamente!', 'Ocurrio un error inesperado, intente de nuevo mas tarde!', true);
+			//window.location.reload();
+		});
+
+	});
+</script>
+
+<section style='width: 80%; text-align: center; margin: 3em auto; clear: both;'>
+	<h1>Administración de Roles</h1>
+
+	<p style='margin: 0 auto; margin-bottom: 3em; margin-top: 3em; font-size: 2em; width: 50%; text-align: justify;'>A continuación encontrará el listado de los roles existentes para la plataforma <strong>Cigueña</strong>:</p>
+	
+	<div style='width: 100%; display: block; text-align: left; margin-bottom: 2em;'>
+		<h3>Creación de nuevos roles:</h3>
+		<label>Nombre del Rol:</label>
+		<input style='width: 30%; display: block; margin-bottom: 1em;' type='text' id='txtrole' value='' placeholder='Ingrese Nombre Rol...' class='form-control'>
+		<button id='newRole' class='btn btn-success'>Crear Nuevo Rol!</button>
+	</div>
+	<h3>Roles Existentes:</h3>
+	<table id='listRoles'>
+		<thead>
+			<tr>
+				<th>Nombre del Rol</th>
+				<th>Modificar</th>
+				<th>Eliminar</th>
+			</tr>
+		</thead>
+		<tbody>
+			<%- jsonRoles %>
+		</tbody>
+	</table>
+</section>

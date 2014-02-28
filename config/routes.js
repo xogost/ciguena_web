@@ -43,9 +43,19 @@ module.exports.routes = {
   },
 
   '/store/order/': {
-    controlle: 'store',
+    controller: 'store',
     action: 'order'
-  }
+  },
+
+  '/roles/list/': {
+    controller: 'sys_roles',
+    action: 'listroles'
+  },
+
+  '/roles/create/': {
+    controller: 'sys_roles',
+    action: 'create'
+  },
 
   /*
   // But what if you want your home page to display

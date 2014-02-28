@@ -1,12 +1,9 @@
 <style>
-h1, h2, h3, h4, h5, span, strong, a{ color: #191919; font-family: 'Oregano', Tahoma; }
-header {width: 80%; margin: 0 auto;}
-body{ background: url('/images/pixel_weave.png'); }
-.header { float: left; width: 49%; }
-.containerMenu { float: right; width: 49%; }
-.menuheader li { float: left; display: inline-block; margin-left: 1em; margin-top: 3em;}
-a {font-size: 1.5em;}
-.map {width: 100%; height: 300px; clear: both; border-top: 3px solid #191919; border-bottom: 3px solid #191919; }
+
+.map {width: 100%; height: 300px; clear: both; border-top: 3px solid #191919; border-bottom: 10px solid #191919; }
+.itemNews { clear: both; display: inline-block; width: 20em; height: 300px;} 
+.containerNews { clear: both; width: 80%; margin: 0 auto; text-align: center;  }
+.itemImageNews { width: 10em;}
 </style>
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIfS9ii1snXq6LLbd59yolJDnCuV0nZNA&sensor=true"> </script>
 <script type='text/javascript'>
@@ -45,22 +42,53 @@ a {font-size: 1.5em;}
 	});
 </script>
 
-<header>
-	<section class="header">
-		<h1><a href='/'>Cigueña</a></h1>
-	</section>
-	<section class="containerMenu">
-		<ul class="menuheader">
-			<li><a href='/sesion/inicio'>Iniciar Sesión</a></li>
-			<li><a href='/store/search'>Buscar Tiendas</a></li>
-			<li><a href='/ciguena/support'>Soporte en Linea</a></li>
-			<li><a href='/ciguena/about'>Quienes Somos</a></li>
-		</ul>
-	</section>
-</header>
-<br/>
-<br/>
 <section class="map">
-	<div id="map-canvas">
-  	</div>
+  <div id="map-canvas">
+    </div>
+</section>
+<br/>
+<br/>
+<section class="containerNews">
+	<h2>¿Cómo funciona?</h2>
+	<section class='itemNews'>
+		<h3>1. Descarga la aplicación móvil</h3>
+		<img src='/images/phone.png' class="itemImageNews" alt='news' />
+	</section>
+
+	<section class='itemNews'>
+		<h3>2. Busca tu tienda</h3>
+		<img src='/images/store.png' class="itemImageNews" alt='news' />
+	</section>
+
+	<section class='itemNews'>
+		<h3>3. Realiza tu pedido</h3>
+		<img src='/images/basket.png' class="itemImageNews" alt='news' />
+	</section>
+
+	<section class='itemNews'>
+		<h3>4. El pedido se empaca y esta listo para enviar</h3>
+		<img src='/images/car.png' class="itemImageNews" alt='news' />
+	</section>
+
+	<section class='itemNews'>
+		<h3>5. Ahorras tiempo</h3>
+		<img src='/images/clock.png' class="itemImageNews" alt='news' />
+	</section>
+
+	<section class='itemNews'>
+		<h3>6. Agrega tu ubicación al pedido</h3>
+		<img src='/images/map.png' class="itemImageNews" alt='news' />
+	</section>
+
+	<section class='itemNews'>
+		<h3>7. Realiza el pago de tu pedido</h3>
+		<img src='/images/wallet.png' class="itemImageNews" alt='news' />
+	</section>
+
+	<section class='itemNews'>
+		<h3>8. Cliente satisfecho</h3>
+		<img src='/images/agreement.png' class="itemImageNews" alt='news' />
+	</section>
+
+	
 </section>
