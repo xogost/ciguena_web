@@ -16,22 +16,7 @@
  */
 
 module.exports = {
-    
-  
-  /**
-   * Action blueprints:
-   *    `/store/create`
-   */
-   create: function (req, res) {
-    
-    // Send a JSON response
-    return res.json({
-      hello: 'world'
-    });
-  },
-
-
-  /**
+   /**
    * Action blueprints:
    *    `/store/index`
    *    `/store`
@@ -40,31 +25,6 @@ module.exports = {
     res.view({ title: "Domicilios Tendero!" });
   },
 
-
-  /**
-   * Action blueprints:
-   *    `/store/destroy`
-   */
-   destroy: function (req, res) {
-    
-    // Send a JSON response
-    return res.json({
-      hello: 'world'
-    });
-  },
-
-
-  /**
-   * Action blueprints:
-   *    `/store/like`
-   */
-   like: function (req, res) {
-    
-    // Send a JSON response
-    return res.json({
-      hello: 'world'
-    });
-  },
 
 
   /**
@@ -83,17 +43,68 @@ module.exports = {
       io.sockets.emit('confirmationOrder', {state: "La solicitud de servicio ha sido recibida, y será confirmada en un lapso de 5 a 10 minutos, Gracias."});
 
       return res.json({
-        hello: 'world'
+        response: 'ok!'
       });
     },
 
+  listStores: function(req, res){
+    Adm_store.find().done(function(error, store){
+      if(error){
+      res.send(400);
+      }else{
+        var html = '';
+        for(item in store){
+          html += '<tr><td>' + store[item].name + '</td><td><buton class="btn btn-success" onclick="updateStore(' + store[item].id + ',\'' + store[item].iduser + '\',\'' + store[item].name + '\', \'' + store[item].address + '\', \'' + store[item].phone + '\', \'' + store[item].mobile_phone + '\', \'' + store[item].latitude + '\', \'' + store[item].longitude + '\');">Modificar</button></td><td><buton class="btn btn-danger" onclick="destroyStore(' + store[item].id + ');">Eliminar</button></td></tr>';
+        }
+        //return res.json({result: "List!"});
+        res.view({ title: "Administración de Tiendas!", jsonStores: html });
+      }
+    });
+  },
 
+  create: function(req, res){
+    var data = req.param('store');
+    Adm_store.create(data).done(function(error, success){
+      if(error)
+        return res.json({error: error});
+      else
+        return res.json({result: "Insert!"});
+    });
+  },
 
+  update: function(req, res){
+    var data = req.param('store');
+    Adm_store.findOne(req.param('idStore')).done(function(err, store){
+      
+      store.iduser = data.iduser;
+      store.name = data.name;
+      store.address = data.address;
+      store.phone = data.phone;
+      store.mobile_phone = data.mobile_phone;
+      store.latitude = data.latitude;
+      store.longitude = data.longitude;
+  
+      store.save(function(err) {
+          return res.json({result: "Update!"});
+      });
+    });
+  },
+
+  destroy: function(req, res){
+    Adm_store.findOne(req.param('idStore')).done(function(err, user){
+      user.destroy(function(err) {
+        return res.json({result: "Destroy!"});
+      });
+    });
+  },
 
   /**
    * Overrides for the settings in `config/controllers.js`
    * (specific to StoreController)
    */
+
+
+
   _config: {}
 
   

@@ -1,0 +1,125 @@
+<link rel="stylesheet" href="/css/datatables/jquery.dataTables.css">
+<link rel="stylesheet" href="/css/jquery.ui/jquery-ui-1.10.4.custom.min.css">
+
+<script type="text/javascript" src="/js/jquery.dataTables.min.js"></script>
+
+<style>
+	.table-stores-form, .table-stores-form tr td input[type='text'], .table-stores-form tr td select {width: 100%;}
+	.table-stores-form tr td { text-align: center; }
+</style>
+
+<script type='text/javascript'>
+	var idStore_g = 0;
+	$(document).ready(function(){
+		var table = $("#listTiendas").dataTable({
+			"aaSorting": [[ 3, "desc" ]],
+			"bJQueryUI": true,
+		});
+
+		$.ajax({
+			url: '/users/listSelect/',
+			type: 'POST',
+			data: {},
+			success: function(result){
+				$("#listUsers").html(result.optionsUsers);
+			},
+			error: function(){
+
+			}
+		});
+
+		$("#newStore").click(function(){
+			var data = { iduser: $("#listUsers").val(), name: $("#txtname").val(), address: $("#txtaddress").val(), phone: $("#txtphone").val(), mobile_phone: $("#txtmobile_phone").val(), latitude: $("#txtlatitude").val(), longitude: $("#txtlongitude").val()  };
+			if(idStore_g == 0)
+				globalAjaxMessage('/store/create/', { store: data}, 'La tienda se almaceno correctamente!', 'Ocurrio un error inesperado, intente de nuevo mas tarde!', true);
+			else if(idStore_g != 0)
+				globalAjaxMessage('/store/update/', { idStore: idStore_g, store: data}, 'La tienda se Actualizó correctamente!', 'Ocurrio un error inesperado, intente de nuevo mas tarde!', true);
+			idStore_g = 0;
+		});
+	});
+
+	function updateStore(idStore, iduser,name, address, phone, mobile_phone, latitude, longitude){
+		idStore_g = idStore;
+		$("#listUsers").val(iduser);
+		$("#txtname").val(name);
+		$("#txtaddress").val(address);
+		$("#txtphone").val(phone);
+		$("#txtmobile_phone").val(mobile_phone);
+		$("#txtlatitude").val(latitude);
+		$("#txtlongitude").val(longitude);
+	}
+
+	function destroyStore(idStore){
+		var valid = confirm("¿Esta segúro que desea eliminar el item seleccionado?");
+		if(valid)
+			globalAjaxMessage('/store/delete/', { idStore: idStore }, 'La tienda se elimino correctamente!', 'Ocurrio un error inesperado, intente de nuevo mas tarde!', true);
+	}
+
+</script>
+
+<section style='width: 80%; text-align: center; margin: 3em auto; clear: both;'>
+	<h1><%- title %></h1>
+
+	<p style='margin: 0 auto; margin-bottom: 3em; margin-top: 3em; font-size: 2em; width: 50%; text-align: justify;'>A continuación encontrará el listado de las tiendas existentes para la plataforma <strong>Cigueña</strong>:</p>
+	
+	<div style='width: 100%; display: block; text-align: left; margin-bottom: 2em;'>
+		<h3>Creación de nuevas tiendas:</h3>
+		<table class='table-stores-form'>
+			<tr>
+				<td><label>Seleccione Usuario:</label></td>
+				<td><label>Nombre de Tienda</label></td>
+				<td><label>Dirección:</label></td>
+				<td><label>Telefono:</label></td>
+			</tr>
+			<tr>
+				<td>
+					<select id="listUsers">
+						<option>Seleccione...</option>
+					</select>
+				</td>
+				<td>
+					<input type='text' id='txtname' value='' placeholder='Ingrese Nombre...' class='form-control'>
+				</td>
+				<td>
+					<input type='text' id='txtaddress' value='' placeholder='Ingrese Dirección...' class='form-control'>
+				</td>
+				<td>
+					<input type='text' id='txtphone' value='' placeholder='Ingrese Contraseña de Usuario...' class='form-control'>
+				</td>
+			</tr>
+			<tr>
+				<td><label>Celular:</label></td>
+				<td><label>Latitud:</label></td>
+				<td><label>Longitud:</label></td>
+				<td><label></label></td>
+			</tr>
+			<tr>
+				<td>
+					<input type='text' id='txtmobile_phone' value='' placeholder='Ingrese Nombre...' class='form-control'>					
+				</td>
+				<td>
+					<input type='text' id='txtlatitude' value='' placeholder='Ingrese Nombre...' class='form-control'>
+				</td>
+				<td>
+					<input type='text' id='txtlongitude' value='' placeholder='Ingrese Dirección...' class='form-control'>
+				</td>
+				<td>
+				</td>
+			</tr>
+		</table>
+		<button id='newStore' class='btn btn-success'>Crear Nuevo Usuario!</button>
+	</div>
+	<h3>Tiendas Existentes:</h3>
+	<table id='listTiendas'>
+		<thead>
+			<tr>
+				<th>Nombre de la Tienda</th>
+				<th>Modificar</th>
+				<th>Eliminar</th>
+			</tr>
+		</thead>
+		<tbody>
+			<%- jsonStores %>
+		</tbody>
+	</table>
+</section>

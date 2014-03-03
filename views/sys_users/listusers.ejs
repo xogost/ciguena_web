@@ -1,0 +1,105 @@
+<link rel="stylesheet" href="/css/datatables/jquery.dataTables.css">
+<link rel="stylesheet" href="/css/jquery.ui/jquery-ui-1.10.4.custom.min.css">
+
+<script type="text/javascript" src="/js/jquery.dataTables.min.js"></script>
+
+<script type='text/javascript'>
+	var idUser_g = 0;
+	$(document).ready(function(){
+		var table = $("#listUsuarios").dataTable({
+			"aaSorting": [[ 3, "desc" ]],
+			"bJQueryUI": true,
+		});
+
+		$.ajax({
+			url: '/users/listRoles/',
+			type: 'POST',
+			data: {},
+			success: function(result){
+				console.log(result.optionsRoles);
+				$("#listRoles").html(result.optionsRoles);
+			},
+			error: function(){
+
+			}
+		});
+
+		$.ajax({
+			url: '/users/listTypes/',
+			type: 'POST',
+			data: {},
+			success: function(result){
+				console.log(result.optionTypes);
+				$("#listTypes").html(result.optionTypes);
+			},
+			error: function(){
+
+			}
+		});		
+
+		$("#newUser").click(function(){
+			if(idUser_g == 0)
+				globalAjaxMessage('/users/create/', { user: $("#txtuser").val(), idtype: $("#listTypes").val(), idrol: $("#listRoles").val(), password: $("#txtpassword").val()  }, 'El usuario se almaceno correctamente!', 'Ocurrio un error inesperado, intente de nuevo mas tarde!', true);
+			else if(idUser_g != 0)
+				globalAjaxMessage('/users/update/', { user: $("#txtuser").val(), idtype: $("#listTypes").val(), idrol: $("#listRoles").val(), password: $("#txtpassword").val() }, 'El usuario se Actualizó correctamente!', 'Ocurrio un error inesperado, intente de nuevo mas tarde!', true);
+			
+			idUser_g = 0;
+
+		});
+	});
+
+	function updateUser(idUser, user, idtype, idrol, password){
+		idUser_g = idUser;
+		$("#txtuser").val(user);
+		$("#listTypes").val(idtype);
+		$("#listRoles").val(idrol);
+		$("#txtpassword").val(password);
+	}
+
+	function destroyUser(idUser){
+		var valid = confirm("¿Esta segúro que desea eliminar el item seleccionado?");
+		if(valid)
+			globalAjaxMessage('/users/delete/', { idUser: idUser }, 'El usuario se elimino correctamente!', 'Ocurrio un error inesperado, intente de nuevo mas tarde!', true);
+	}
+
+</script>
+
+<section style='width: 80%; text-align: center; margin: 3em auto; clear: both;'>
+	<h1>Administración de Usuarios</h1>
+
+	<p style='margin: 0 auto; margin-bottom: 3em; margin-top: 3em; font-size: 2em; width: 50%; text-align: justify;'>A continuación encontrará el listado de los usuarios existentes para la plataforma <strong>Cigueña</strong>:</p>
+	
+	<div style='width: 100%; display: block; text-align: left; margin-bottom: 2em;'>
+		<h3>Creación de nuevos usuarios:</h3>
+		<label>Seleccione Rol:</label>
+		<br/>
+		<select id="listRoles">
+			<option>Seleccione...</option>
+		</select>
+		<br/>
+		<label>Seleccione Tipo de Usuario:</label>
+		<br/>
+		<select id="listTypes">
+			<option>Seleccione...</option>
+		</select>
+		<br/>
+		<label>Nombre del Usuario:</label>
+		<input style='width: 30%; display: block; margin-bottom: 1em;' type='text' id='txtuser' value='' placeholder='Ingrese Usuario...' class='form-control'>
+		<label>Contraseña del Usuario:</label>
+		<input style='width: 30%; display: block; margin-bottom: 1em;' type='password' id='txtpassword' value='' placeholder='Ingrese Contraseña de Usuario...' class='form-control'>
+		<button id='newUser' class='btn btn-success'>Crear Nuevo Usuario!</button>
+	</div>
+	<h3>Usuarios Existentes:</h3>
+	<table id='listUsuarios'>
+		<thead>
+			<tr>
+				<th>Nombre del Usuario</th>
+				<th>Modificar</th>
+				<th>Eliminar</th>
+			</tr>
+		</thead>
+		<tbody>
+			<%- jsonUsers %>
+		</tbody>
+	</table>
+</section>

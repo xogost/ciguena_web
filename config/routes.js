@@ -47,6 +47,26 @@ module.exports.routes = {
     action: 'order'
   },
 
+  '/store/list/': {
+    controller: 'store',
+    action: 'listStores'
+  },
+
+  '/store/create/': {
+    controller: 'store',
+    action: 'create'
+  },
+
+  '/store/update/': {
+    controller: 'store',
+    action: 'update'
+  },
+
+  '/store/delete/': {
+    controller: 'store',
+    action: 'destroy'
+  },
+
   '/roles/list/': {
     controller: 'sys_roles',
     action: 'listroles'
@@ -57,6 +77,50 @@ module.exports.routes = {
     action: 'create'
   },
 
+  '/roles/update/': {
+    controller: 'sys_roles',
+    action: 'update'
+  },
+
+  '/roles/delete/': {
+    controller: 'sys_roles',
+    action: 'destroy'
+  },
+
+  '/users/list/': {
+    controller: 'sys_users',
+    action: 'listusers'
+  },
+
+  '/users/listSelect/': {
+    controller: 'sys_users',
+    action: 'listUsersSelect'
+  },
+
+  '/users/create/': {
+    controller: 'sys_users',
+    action: 'create'
+  },
+
+  '/users/update/': {
+    controller: 'sys_users',
+    action: 'update'
+  },
+
+  '/users/delete/': {
+    controller: 'sys_users',
+    action: 'destroy'
+  },
+
+  '/users/listRoles/': {
+    controller: 'sys_users',
+    action: 'listRoles'
+  },
+
+  '/users/listTypes/': {
+    controller: 'sys_users',
+    action: 'listTypeUsers'
+  },
   /*
   // But what if you want your home page to display
   // a signup form located at `views/user/signup.ejs`?

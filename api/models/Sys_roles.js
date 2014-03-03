@@ -2,7 +2,7 @@
  * Sys_roles
  *
  * @module      :: Model
- * @description :: A short summary of how this model works and what it represents.
+ * @description :: Corresponde al modelo de la tabla roles de la base de datos ciguena.
  * @docs		:: http://sailsjs.org/#!documentation/models
  */
 

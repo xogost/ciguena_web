@@ -2,7 +2,7 @@ h1, h2, h3, h4, h5, span, strong, a, p, label, th, button{ color: #191919; font-
 p, label, th, button{font-size: 1.4em;}
 body{ background: url('/images/pixel_weave.png'); }
 header {width: 80%; margin: 0 auto;}
-.header { float: left; width: 49%; }
-.containerMenu { float: right; width: 49%; border-bottom: 1px dashed #191919; }
+.header { float: left; width: 20%; }
+.containerMenu { float: right; width: 79%; border-bottom: 1px dashed #191919; }
 .menuheader li { float: left; display: inline-block; margin-left: 1em; margin-top: 3em;}
 a {font-size: 1.5em; text-decoration: none;}

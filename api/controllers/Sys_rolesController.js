@@ -25,7 +25,7 @@ module.exports = {
   		}else{
   			var html = '';
   			for(item in roles){
-  				html += '<tr><td>' + roles[item].role + '</td><td><buton class="btn btn-success">Modificar</button></td><td><buton class="btn btn-danger">Eliminar</button></td></tr>';
+  				html += '<tr><td>' + roles[item].role + '</td><td><buton class="btn btn-success" onclick="updateRol(' + roles[item].id + ',\'' + roles[item].role + '\');">Modificar</button></td><td><buton class="btn btn-danger" onclick="destroyRol(' + roles[item].id + ');">Eliminar</button></td></tr>';
   			}
 
   			res.view({ title: "Creación de Roles!", jsonRoles: html });
@@ -35,7 +35,27 @@ module.exports = {
 
   create: function(req, res){
   	Sys_roles.create({ role: req.param('roleName') }).done(function(error, success){
-  		return res.json({result: "ok!"});
+  		return res.json({result: "Insert!"});
+  	});
+  },
+
+  update: function(req, res){
+  	Sys_roles.findOne(req.param('idrol')).done(function(err, role){
+		role.role = req.param('roleName');
+		
+		role.save(function(err) {
+		    return res.json({result: "Update!"});
+	  	});
+
+  	});
+  },
+
+  destroy: function(req, res){
+  	Sys_roles.findOne(req.param('idrol')).done(function(err, role){
+		role.destroy(function(err) {
+		    return res.json({result: "Destroy!"});
+	  	});
+
   	});
   },
   /**

@@ -4,6 +4,7 @@
 <script type="text/javascript" src="/js/jquery.dataTables.min.js"></script>
 
 <script type='text/javascript'>
+	var idRol_g = 0;
 	$(document).ready(function(){
 		var table = $("#listRoles").dataTable({
 			"aaSorting": [[ 3, "desc" ]],
@@ -11,11 +12,27 @@
 		});
 
 		$("#newRole").click(function(){
-			globalAjaxMessage('/roles/create/', { roleName: $("#txtrole").val() }, 'El rol se almaceno correctamente!', 'Ocurrio un error inesperado, intente de nuevo mas tarde!', true);
-			//window.location.reload();
-		});
+			if(idRol_g == 0)
+				globalAjaxMessage('/roles/create/', { roleName: $("#txtrole").val() }, 'El rol se almaceno correctamente!', 'Ocurrio un error inesperado, intente de nuevo mas tarde!', true);
+			else if(idRol_g != 0)
+				globalAjaxMessage('/roles/update/', { idrol: idRol_g, roleName: $("#txtrole").val() }, 'El rol se Actualizó correctamente!', 'Ocurrio un error inesperado, intente de nuevo mas tarde!', true);
+			
+			idRol_g = 0;
 
+		});
 	});
+
+	function updateRol(idRol, nameRol){
+		idRol_g = idRol;
+		$("#txtrole").val(nameRol);
+	}
+
+	function destroyRol(idRol){
+		var valid = confirm("¿Esta segúro que desea eliminar el item seleccionado?");
+		if(valid)
+			globalAjaxMessage('/roles/delete/', { idrol: idRol }, 'El rol se elimino correctamente!', 'Ocurrio un error inesperado, intente de nuevo mas tarde!', true);
+	}
+
 </script>
 
 <section style='width: 80%; text-align: center; margin: 3em auto; clear: both;'>
