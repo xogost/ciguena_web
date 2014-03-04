@@ -8,6 +8,9 @@
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIfS9ii1snXq6LLbd59yolJDnCuV0nZNA&sensor=true"> </script>
 <script type='text/javascript'>
 	$(document).ready(function(){
+		$('#dialogStore').modal({
+			show: false
+		});
 		if($("#map-canvas").length != 0)
 	    {
 	        var mapOptions = {
@@ -38,6 +41,42 @@
 	        }
 
 	        $("#map-canvas").css("height","300px");
+
+	      	$.ajax({
+	      		url: '/store/markers/',
+	      		type: 'POST',
+	      		data: {},
+	      		success: function(result){
+	      			for(item in result){
+	      				var myLatlng = new google.maps.LatLng(result[item][0].latitude.toString(),result[item][0].longitude.toString());
+						var mapOptions = {
+							zoom: 4,
+							center: myLatlng,
+							mapTypeId: google.maps.MapTypeId.ROADMAP
+						}
+
+						var marker = new google.maps.Marker({
+							position: myLatlng,
+							map: map,
+							title: result[item][0].name,
+							labelContent: result[item][0].name,
+							labelAnchor: new google.maps.Point(3, 30),
+							/*labelClass: "labels", // the CSS class for the label*/
+							labelInBackground: false,
+							idStore: result[item][0].id
+						});
+
+						google.maps.event.addListener(marker, 'click', function() {
+						    $("#titleModal").html(marker.title);
+						    $("#textModal").html(marker.title);
+						    $('#dialogStore').modal('show');
+						});
+	      			}
+	      		},
+	      		error: function(){
+
+	      		}
+	      	});
 	    }
 	});
 </script>
@@ -90,5 +129,16 @@
 		<img src='/images/agreement.png' class="itemImageNews" alt='news' />
 	</section>
 
-	
+	<div id='dialogStore' class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-sm">
+	    <div class="modal-content">
+	    	<br/>
+			<h4 id='titleModal'></h4>
+			<p> Usted a seleccionado la tienda (<span id='textModal'></span>), si desea solicitar un docimilio haga click en continuar.</p>
+			<button class="btn btn-sm btn-success">Continuar!</button>
+			<br/>
+			<br/>
+	    </div>
+  </div>
+</div>
 </section>

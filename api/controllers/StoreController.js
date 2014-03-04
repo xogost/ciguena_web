@@ -62,6 +62,17 @@ module.exports = {
     });
   },
 
+  mapStores: function(req, res){
+    res.header('Access-Control-Allow-Origin', "*")
+    Adm_store.find().done(function(error, store){
+      if(error){
+        res.send(400);
+      }else{
+        return res.json({ storeJson: store });
+      }
+    });
+  },
+
   create: function(req, res){
     var data = req.param('store');
     Adm_store.create(data).done(function(error, success){
@@ -103,7 +114,13 @@ module.exports = {
    * (specific to StoreController)
    */
 
-
+   getStore: function(req, res){
+    res.header('Access-Control-Allow-Origin', "*");
+    var data = req.param('idStore');
+    Adm_store.findOne(req.param('idStore')).done(function(err, store){
+          return res.json({data: store});
+    });
+  },
 
   _config: {}
 

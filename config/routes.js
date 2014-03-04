@@ -52,6 +52,11 @@ module.exports.routes = {
     action: 'listStores'
   },
 
+  '/store/markers/': {
+    controller: 'store',
+    action: 'mapStores'
+  },
+
   '/store/create/': {
     controller: 'store',
     action: 'create'
@@ -65,6 +70,11 @@ module.exports.routes = {
   '/store/delete/': {
     controller: 'store',
     action: 'destroy'
+  },
+
+  '/store/getStore/': {
+    controller: 'store',
+    action: 'getStore'
   },
 
   '/roles/list/': {
