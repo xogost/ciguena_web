@@ -1,12 +1,15 @@
 <script type="text/javascript">
 	var arrayOrdersProducts = [];
   var count = 0;
+  var idstore = '<%- idStore %>';
+
 	$(document).ready(function(){
 		socket.on('OrderResponse', function(data){
-			$("#ClientsOrders").append("<li><a href='#' onclick='loadOrder(" + count + ");' >" + data.dataPeopleP[0] + " <br/>" + data.dataPeopleP[1] + " " + data.dataPeopleP[2] + "</a></li>");
-        count++;
+      if(data.idStoreP == idstore){
+  			$("#ClientsOrders").append("<li><a href='#' onclick='loadOrder(" + count + ");' >" + data.dataPeopleP[0] + " <br/>" + data.dataPeopleP[1] + " " + data.dataPeopleP[2] + "</a></li>");
+          count++;
         arrayOrdersProducts.push(data.orderListP);
-
+      }
 		});
 	});
 
@@ -26,6 +29,7 @@
 
     $("#ItemList").html(html);
   }
+  var a = '<%- nameStore %>';
 </script>
 
 <style type="text/css">
@@ -49,7 +53,7 @@ body, .food { background: url('/images/food.png');}
 </style>
 
 <div class="food" style="width: 100%; text-align: center; ">
-	<h1 style="font-family: 'Oregano', Tahoma;">Listado de Domicilios en Cola para tienda:<br/>Don Lucho!</h1>
+	<h1 style="font-family: 'Oregano', Tahoma; clear: both;">Listado de Domicilios en Cola para tienda:<br/><%- nameStore %></h1>
 	<div id="orderListContainer" style="background-color: rgba(0, 0, 0, 0.6); heigth: 600px; width: 80%; margin: 0 auto; padding: 3em;">
 		<ol id="ClientsOrders">
 

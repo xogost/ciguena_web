@@ -1,5 +1,4 @@
 <style>
-
 .map {width: 100%; height: 300px; clear: both; border-top: 3px solid #191919; border-bottom: 10px solid #191919; }
 .itemNews { clear: both; display: inline-block; width: 20em; height: 300px;} 
 .containerNews { clear: both; width: 80%; margin: 0 auto; text-align: center;  }
@@ -47,30 +46,35 @@
 	      		type: 'POST',
 	      		data: {},
 	      		success: function(result){
-	      			for(item in result){
-	      				var myLatlng = new google.maps.LatLng(result[item][0].latitude.toString(),result[item][0].longitude.toString());
+	      			for(item in result.storeJson){
+	      				var myLatlng = new google.maps.LatLng(result.storeJson[item].latitude.toString(),result.storeJson[item].longitude.toString());
 						var mapOptions = {
 							zoom: 4,
 							center: myLatlng,
-							mapTypeId: google.maps.MapTypeId.ROADMAP
+							mapTypeId: google.maps.MapTypeId.ROADMAP,
+							panControl: true,
+							zoomControl: true,
+							mapTypeControl: true,
+							scaleControl: true,
+							streetViewControl: true,
+							overviewMapControl: true
 						}
 
 						var marker = new google.maps.Marker({
 							position: myLatlng,
 							map: map,
-							title: result[item][0].name,
-							labelContent: result[item][0].name,
-							labelAnchor: new google.maps.Point(3, 30),
-							/*labelClass: "labels", // the CSS class for the label*/
-							labelInBackground: false,
-							idStore: result[item][0].id
+							title: result.storeJson[item].name,
+							idStore: result.storeJson[item].id
 						});
 
-						google.maps.event.addListener(marker, 'click', function() {
-						    $("#titleModal").html(marker.title);
-						    $("#textModal").html(marker.title);
-						    $('#dialogStore').modal('show');
-						});
+						google.maps.event.addListener(marker, 'click', (function(marker, item) {
+				            return function() {
+				                $("#titleModal").html(marker.title);
+							    $("#textModal").html(marker.title);
+							    $('#dialogStore').modal('show');
+				            }
+				        })(marker, item));
+						
 	      			}
 	      		},
 	      		error: function(){

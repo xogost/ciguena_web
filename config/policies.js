@@ -16,8 +16,28 @@ module.exports.policies = {
 
   // Default policy for all controllers and actions
   // (`true` allows public access) 
-  '*': true
-
+  	CiguenaController: {
+		"*": true,
+	},
+	Sys_usersController: {
+		"*": 'isAuthenticated',
+	},
+	Sys_rolesController: {
+		"*": 'isAuthenticated',
+	},
+	StoreController: {
+		"list": 'isAuthenticated',
+		"create": 'isAuthenticated',
+		"update": 'isAuthenticated',
+		"destroy": 'isAuthenticated',
+		"listStores": 'isAuthenticated',
+		"mapStores": true,
+		"getStore": true
+	},
+	AuthController: {
+		'*': true,
+	},
+  
   /*
 	// Here's an example of adding some policies to a controller
 	RabbitController: {

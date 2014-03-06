@@ -24,7 +24,14 @@ module.exports = {
    *    `/ciguena`
    */
    index: function (req, res) {
-    res.view({ title: "Cigueña Pagina Principal!" });
+    var isAuthenticated = false;
+    if(req.isAuthenticated()){
+      isAuthenticated = true;
+    }
+    res.view({ 
+      title: "Cigueña Pagina Principal!", 
+      Authenticated: isAuthenticated 
+    });
   },
 
 

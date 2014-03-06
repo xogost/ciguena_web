@@ -22,7 +22,16 @@ module.exports = {
    *    `/store`
    */
   index: function (req, res) {
-    res.view({ title: "Domicilios Tendero!" });
+    var idstoreP = req.param("idstore");
+
+    Adm_store.findOne(idstoreP).done(function(err, store){
+      if(!err){
+        res.view({ title: "Domicilios Tendero!", idStore: idstoreP, nameStore: store.name });
+      }else{
+        res.view({ title: "Domicilios Tendero!", idStore: idstoreP, nameStore: err });
+      }
+
+    });
   },
 
 
@@ -32,15 +41,15 @@ module.exports = {
    *    `/store/order`
    */
    order: function (req, res) {
+      res.header('Access-Control-Allow-Origin', "*");
       var socket = req.socket;
       var io = sails.io;
 
       var orderList = req.param('orderList');
       var dataPeople = req.param('dataPeople');
+      var idStore = req.param('idStore');
       
-      io.sockets.emit("OrderResponse", { orderListP: orderList, dataPeopleP: dataPeople });
-
-      io.sockets.emit('confirmationOrder', {state: "La solicitud de servicio ha sido recibida, y será confirmada en un lapso de 5 a 10 minutos, Gracias."});
+      io.sockets.emit("OrderResponse", { idStoreP: idStore, orderListP: orderList, dataPeopleP: dataPeople });
 
       return res.json({
         response: 'ok!'
@@ -119,6 +128,21 @@ module.exports = {
     var data = req.param('idStore');
     Adm_store.findOne(req.param('idStore')).done(function(err, store){
           return res.json({data: store});
+    });
+  },
+
+  listStoresClient: function(req, res){
+    Adm_store.find().done(function(error, store){
+      if(error){
+        res.send(400);
+      }else{
+        var html = '';
+        for(item in store){
+          html += '<li><p>' + store[item].name + '</p><button class="btn btn-success" style="font-size: 1.4em;" onclick="window.location = \'/store&' + store[item].id + '\';">Ingresar a Tienda</button></li>';
+        }
+        //return res.json({result: "List!"});
+        res.view({ title: "Listado de Tiendas!", jsonStores: html });
+      }
     });
   },
 
